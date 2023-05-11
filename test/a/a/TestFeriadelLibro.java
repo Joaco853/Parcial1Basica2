@@ -25,4 +25,55 @@ public class TestFeriadelLibro {
 		assertEquals(numerodestantsesperados.intValue(),pabellon.getstants().size());
 	}
 
+
+	@Test
+	public void  QueunaPersonaNoPuedaEntrarMasDeUnaVezConLaMismaEntrada() {
+		
+		
+		Persona persona = new Persona();
+		Integer numeroentrada=1111;
+		Entrada entrada= new Entrada(numeroentrada);
+		
+		
+		Boolean entradacompradacorrectamente = persona.entradacomprada(entrada);
+		Boolean entrocorrectamente = persona.usarentrada(entrada);
+		
+		assertTrue(entradacompradacorrectamente);
+		assertTrue(entrocorrectamente);
+	
+		Boolean entradacompradacorrectamente2 = persona.entradacomprada(entrada);
+		Boolean entrocorrectamente2 = persona.usarentrada(entrada);
+		
+		assertFalse(entradacompradacorrectamente2);
+		assertFalse(entrocorrectamente2);
+		
+	}
+	
+	@Test
+	public void  QueunaAlumnoPagueLaEntradaUnDiaDomingoPerounDocenteNoYPuedanIngresar() {
+		
+		Alumno alumno = new Alumno();
+		String Dia = "Domingo";
+		Integer numeroentrada=1111;
+		Entrada entrada= new Entrada(numeroentrada);
+		
+		Docente docente = new Docente();
+		Integer numeroentrada2=2222;
+		Entrada entrada2= new Entrada(numeroentrada2);
+
+		
+		Boolean entradacompradacorrectamente = alumno.entradacomprada(entrada,Dia);
+		Boolean entrocorrectamente = alumno.usarentrada(entrada);
+		
+		assertTrue(entradacompradacorrectamente);
+		assertTrue(entrocorrectamente);
+		
+		Boolean entradacompradacorrectamente2 = docente.entradacomprada(entrada2);
+		Boolean entrocorrectamente2 = docente.usarentrada(entrada2);
+		
+		assertTrue(entradacompradacorrectamente2);
+		assertTrue(entrocorrectamente2);
+		
+	}
+	
 }
