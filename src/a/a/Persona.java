@@ -6,7 +6,6 @@ public class Persona {
 	
 	ArrayList<Entrada> Entradas = new ArrayList<>();
 	Boolean pagoentradas = false;
-
 	
 	public Boolean entradacomprada(Entrada entrada) {
 		// TODO Auto-generated method stub
@@ -56,4 +55,14 @@ public class Persona {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	public Double valorrealizacompra(Compra compra) {
+		// TODO Auto-generated method stub
+		if(pagoentradas) {
+			compra.setDescuentoporcomprarentrada(pagoentradas);
+		}
+		return compra.valorapagarcompra();
+		
+	}
+	
 }

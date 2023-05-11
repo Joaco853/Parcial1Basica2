@@ -8,6 +8,8 @@ public class Stant {
 	String editorial;
 	Integer metroscuadradosocupados;
 	Integer ubicacion;
+	ArrayList<Compra> Ventas = new ArrayList<>();
+
 	
 	public Stant(String editorial, Integer metroscuadradosocupados, Integer ubicacion) {
 
@@ -32,5 +34,13 @@ public class Stant {
 		Stant other = (Stant) obj;
 		return Objects.equals(ubicacion, other.ubicacion);
 	}
-	
+
+
+
+	public void agregarunaventa(Compra compra, Docente docente) {
+		// TODO Auto-generated method stub
+		Compra venta= new Compra(compra,docente);
+		Ventas.add(venta);
+	}
+
 }
