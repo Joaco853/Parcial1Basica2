@@ -2,6 +2,10 @@ package a.a;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import org.junit.Test;
 
 public class TestFeriadelLibro {
@@ -132,5 +136,67 @@ public class TestFeriadelLibro {
 		assertEquals(numerodestantsesperados.intValue(),stante.Ventas.size());
 
 }
+	
+	@Test
+	public void agregarUnaPersonaALaListaDeVisitantesQueFueALaFeria() {
+		 Feria feria;
+		    Alumno alumno;
+		    Docente docente;
+		    Persona visitante;
+		    List<Persona> personasQueEntraron;
+
+		    feria = new Feria("Feria del Libro");
+		    personasQueEntraron = new ArrayList<>();
+
+		    alumno = new Alumno();
+		    Entrada entradaAlumno = new Entrada(1000);
+		    alumno.entradacomprada(entradaAlumno, "Lunes");
+		    personasQueEntraron.add(alumno);
+		
+
+		    docente = new Docente();
+		    Entrada entradaDocente = new Entrada(1010);
+		    docente.entradacomprada(entradaDocente);
+		    personasQueEntraron.add(docente);
+		    
+
+		    visitante = new Persona();
+		    Entrada entradaVisitante = new Entrada(1050);
+		    visitante.entradacomprada(entradaVisitante);
+		    personasQueEntraron.add(visitante);
+		    
+		    feria.agregarVisitante(alumno);
+		    feria.agregarVisitante(docente);
+		    feria.agregarVisitante(visitante);
+		    
+		    assertEquals(3, feria.getVisitantes().size());
+		    assertEquals(personasQueEntraron,feria.getVisitantes());
+
+		}
+	
+	@Test
+	public void aplicarDescuentoSiTieneDescuentoLaCategoriaQueTengaElLibro() {
+        Libro libro = new Libro("El Quijote", "Miguel de Cervantes", "Novela", 100.0);
+        
+        Compra compra = new Compra(libro, 100.0);
+        compra.setDescuentoporcomprarentrada(true);
+
+        assertEquals(80.0, compra.valorLibroPorDescuento(), 0.001);
+    }
+	
+	@Test
+	public void queNoSeApliqueElDescuentoSiLaCategoriaNoTieneDescuento() {
+		Libro libro = new Libro("fantasma de canterville", "Oscar Wilde", "Fantasia", 100.0);
+        
+        Compra compra = new Compra(libro, 100.0);
+        compra.setDescuentoporcomprarentrada(true);
+
+        assertEquals(100.0, compra.valorLibroPorDescuento(), 0.001);
+	}
+	
+	@Test
+	public void buscarSiEnUnStantSeEncuentraUnXLibro() {
+        
+	}
 	
 }
