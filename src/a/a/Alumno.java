@@ -4,10 +4,8 @@ public class Alumno extends Persona {
 
 	String[] dias = new String[] {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"};
 	
-	public Alumno() {
-		super();
-	}
-	
+
+
 	@Override
 	public Boolean entradacomprada(Entrada entrada, String dia) {
 		Boolean Entradanueva=false;
@@ -44,9 +42,5 @@ public class Alumno extends Persona {
 		
 		return aceptado=nopagaentrada();
 	}
-
-
-
-
 
 }

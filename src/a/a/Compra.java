@@ -1,12 +1,20 @@
 package a.a;
 
 public class Compra {
-
+	
+	private Libro libro;
 	private Double valorcompra;
-
 	Boolean descuentoporcomprarentrada;
 	Compra compra;
 	Persona persona;
+	
+	public Compra(Libro libro, Double valorcompra) {
+		this.libro = libro;
+		this.descuentoporcomprarentrada = false;
+		this.valorcompra = valorcompra;
+	}
+
+
 	public Compra(Double valorCompra) {
 		// TODO Auto-generated constructor stub
 		this.valorcompra=valorCompra;
@@ -34,5 +42,11 @@ public class Compra {
 		}
 		return valorcompra;
 	}
-
+	
+	public double valorLibroPorDescuento() {
+		if(descuentoporcomprarentrada && libro.getCategoria().equals("Novela")) {
+			return valorcompra*0.8;
+		}
+		return valorcompra;
+	}
 }

@@ -1,6 +1,5 @@
 package a.a;
 
-import java.util.Objects;
 
 public class Entrada {
 

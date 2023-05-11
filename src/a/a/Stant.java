@@ -1,10 +1,12 @@
 package a.a;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Stant {
 	
+	 private ArrayList<Libro> libros = new ArrayList<>();
 	String editorial;
 	Integer metroscuadradosocupados;
 	Integer ubicacion;
@@ -12,7 +14,6 @@ public class Stant {
 
 	
 	public Stant(String editorial, Integer metroscuadradosocupados, Integer ubicacion) {
-
 		this.editorial=editorial;
 		this.metroscuadradosocupados=metroscuadradosocupados;
 		this.ubicacion=ubicacion;
@@ -35,12 +36,32 @@ public class Stant {
 		return Objects.equals(ubicacion, other.ubicacion);
 	}
 
-
-
 	public void agregarunaventa(Compra compra, Docente docente) {
 		// TODO Auto-generated method stub
 		Compra venta= new Compra(compra,docente);
 		Ventas.add(venta);
 	}
+	
+	public void agregarLibro(Libro libro) {
+	    libros.add(libro);
+	}
 
+	public List<Libro> getLibros() {
+		return libros;
+	}
+
+	public ArrayList<Compra> getVentas() {
+		// TODO Auto-generated method stub
+		return Ventas;
+	}
+	public List<Libro> buscarLibrosPorAutor(String autor) {
+	    List<Libro> librosEncontrados = new ArrayList<>();
+	    for (Libro libro : libros) {
+	        if (libro.getAutor().equals(autor)) {
+	            librosEncontrados.add(libro);
+	        }
+	    }
+	    return librosEncontrados;
+	}
+	
 }
