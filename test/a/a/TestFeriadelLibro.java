@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TestFeriadelLibro {
@@ -195,8 +195,52 @@ public class TestFeriadelLibro {
 	}
 	
 	@Test
-	public void buscarSiEnUnStantSeEncuentraUnXLibro() {
+	public void hacerUnaBusquedaDeUnLibroPorNombreYDevuelveElLibro() {
+	Stant stant;
+	Libro libro1;
+	Libro libro2;
+	Libro libro3;
+	
+	stant = new Stant("Editorial Luna",50,2);
+	libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+    libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+    libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+    stant.agregarLibro(libro1);
+    stant.agregarLibro(libro2);
+    stant.agregarLibro(libro3);
+    
+    String nombre = "Cien años de soledad";
+    List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+    
+    Assert.assertNotNull(resultado);
+    Assert.assertFalse(resultado.isEmpty());
+    for(Libro libro: resultado) {
+    	Assert.assertEquals(nombre, libro.getTitulo());
+    }
+	}
+    
+	@Test
+    public void hacerUnaBusquedaDeUnLibroPorNombreYSiNoLoEncuentraDevuelvaVacio() {
+    	Stant stant;
+    	Libro libro1;
+    	Libro libro2;
+    	Libro libro3;
+    	
+    	stant = new Stant("Editorial Luna",50,2);
+    	libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+        libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+        libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+        stant.agregarLibro(libro1);
+        stant.agregarLibro(libro2);
+        stant.agregarLibro(libro3);
         
+        String nombre = "El Principito";
+        List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+        
+        Assert.assertNotNull(resultado);
+        Assert.assertTrue(resultado.isEmpty());
 	}
 	
 }

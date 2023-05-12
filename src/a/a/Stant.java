@@ -54,10 +54,10 @@ public class Stant {
 		// TODO Auto-generated method stub
 		return Ventas;
 	}
-	public List<Libro> buscarLibrosPorAutor(String autor) {
+	public List<Libro> buscarLibroPorNombre(String nombre) {
 	    List<Libro> librosEncontrados = new ArrayList<>();
 	    for (Libro libro : libros) {
-	        if (libro.getAutor().equals(autor)) {
+	        if (libro.getTitulo().equals(nombre)) {
 	            librosEncontrados.add(libro);
 	        }
 	    }

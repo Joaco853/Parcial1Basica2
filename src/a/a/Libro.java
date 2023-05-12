@@ -25,6 +25,11 @@ public class Libro {
 		// TODO Auto-generated method stub
 		return autor;
 	}
+
+	public String getTitulo() {
+		// TODO Auto-generated method stub
+		return titulo;
+	}
 	
 	
 }
