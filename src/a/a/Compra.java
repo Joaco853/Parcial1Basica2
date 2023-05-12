@@ -22,10 +22,10 @@ public class Compra {
 	}
 
 	
-	public Compra(Compra compra, Docente docente) {
+	public Compra(Compra compra, Persona persona) {
 		// TODO Auto-generated constructor stub
 		this.compra = compra;
-		this.persona = docente;
+		this.persona = persona;
 	}
 
 

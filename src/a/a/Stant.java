@@ -36,9 +36,9 @@ public class Stant {
 		return Objects.equals(ubicacion, other.ubicacion);
 	}
 
-	public void agregarunaventa(Compra compra, Docente docente) {
+	public void agregarunaventa(Compra compra, Persona persona) {
 		// TODO Auto-generated method stub
-		Compra venta= new Compra(compra,docente);
+		Compra venta= new Compra(compra,persona);
 		Ventas.add(venta);
 	}
 	
