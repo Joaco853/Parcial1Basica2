@@ -63,5 +63,15 @@ public class Stant {
 	    }
 	    return librosEncontrados;
 	}
+
+	public List<Libro> buscarPorCategoria(String categoria) {
+		List<Libro> librosEncontrados = new ArrayList<>();
+	    for (Libro libro : libros) {
+	        if (libro.getCategoria().equals(categoria)) {
+	            librosEncontrados.add(libro);
+	        }
+	    }
+	    return librosEncontrados;
+	}
 	
 }
