@@ -139,38 +139,36 @@ public class TestFeriadelLibro {
 	
 	@Test
 	public void agregarUnaPersonaALaListaDeVisitantesQueFueALaFeria() {
-		 Feria feria;
-		    Alumno alumno;
-		    Docente docente;
-		    Persona visitante;
-		    List<Persona> personasQueEntraron;
+		Feria feria;
+		Alumno alumno;
+		Docente docente;
+		Persona visitante;
+		List<Persona> personasQueEntraron;
 
-		    feria = new Feria("Feria del Libro");
-		    personasQueEntraron = new ArrayList<>();
+		feria = new Feria("Feria del Libro");
+		personasQueEntraron = new ArrayList<>();
 
-		    alumno = new Alumno();
-		    Entrada entradaAlumno = new Entrada(1000);
-		    alumno.entradacomprada(entradaAlumno, "Lunes");
-		    personasQueEntraron.add(alumno);
-		
+		alumno = new Alumno();
+		Entrada entradaAlumno = new Entrada(1000);
+		alumno.entradacomprada(entradaAlumno, "Lunes");
+		personasQueEntraron.add(alumno);
 
-		    docente = new Docente();
-		    Entrada entradaDocente = new Entrada(1010);
-		    docente.entradacomprada(entradaDocente);
-		    personasQueEntraron.add(docente);
-		    
+		docente = new Docente();
+		Entrada entradaDocente = new Entrada(1010);
+		docente.entradacomprada(entradaDocente);
+		personasQueEntraron.add(docente);
 
-		    visitante = new Persona();
-		    Entrada entradaVisitante = new Entrada(1050);
-		    visitante.entradacomprada(entradaVisitante);
-		    personasQueEntraron.add(visitante);
-		    
-		    feria.agregarVisitante(alumno);
-		    feria.agregarVisitante(docente);
-		    feria.agregarVisitante(visitante);
-		    
-		    assertEquals(3, feria.getVisitantes().size());
-		    assertEquals(personasQueEntraron,feria.getVisitantes());
+		visitante = new Persona();
+		Entrada entradaVisitante = new Entrada(1050);
+		visitante.entradacomprada(entradaVisitante);
+		personasQueEntraron.add(visitante);
+
+		feria.agregarVisitante(alumno);
+		feria.agregarVisitante(docente);
+		feria.agregarVisitante(visitante);
+
+		assertEquals(3, feria.getVisitantes().size());
+		assertEquals(personasQueEntraron, feria.getVisitantes());
 
 		}
 	
@@ -194,9 +192,99 @@ public class TestFeriadelLibro {
         assertEquals(100.0, compra.valorLibroPorDescuento(), 0.001);
 	}
 	
-	@Test
-	public void buscarSiEnUnStantSeEncuentraUnXLibro() {
-        
+	public void hacerUnaBusquedaDeUnLibroPorNombreYDevuelveElLibro() {
+		Stant stant;
+		Libro libro1;
+		Libro libro2;
+		Libro libro3;
+
+		stant = new Stant("Editorial Luna", 50, 2);
+		libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+		libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+		libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+		stant.agregarLibro(libro1);
+		stant.agregarLibro(libro2);
+		stant.agregarLibro(libro3);
+
+		String nombre = "Cien años de soledad";
+		List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+
+		assertNotNull(resultado);
+		assertFalse(resultado.isEmpty());
+		for (Libro libro : resultado) {
+			assertEquals(nombre, libro.getTitulo());
+		}
 	}
-	
+
+	@Test
+	public void hacerUnaBusquedaDeUnLibroPorNombreYSiNoLoEncuentraDevuelvaVacio() {
+		Stant stant;
+		Libro libro1;
+		Libro libro2;
+		Libro libro3;
+
+		stant = new Stant("Editorial Luna", 50, 2);
+		libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+		libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+		libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+		stant.agregarLibro(libro1);
+		stant.agregarLibro(libro2);
+		stant.agregarLibro(libro3);
+
+		String nombre = "El Principito";
+		List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+
+		assertNotNull(resultado);
+		assertTrue(resultado.isEmpty());
+	}
+
+	@Test
+	public void buscaLosLibrosSegunSuCategoriaYDevuelveUnaListaConLosLibros() {
+		Stant stant;
+		Libro libro1;
+		Libro libro2;
+		Libro libro3;
+
+		stant = new Stant("Editorial Estrella", 50, 2);
+		libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+		libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+		libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+		stant.agregarLibro(libro1);
+		stant.agregarLibro(libro2);
+		stant.agregarLibro(libro3);
+
+		String categoria = "Novela";
+		List<Libro> resultado = stant.buscarPorCategoria(categoria);
+
+		for (Libro libro : resultado) {
+			assertEquals(categoria, libro.getCategoria());
+		}
+	}
+
+	@Test
+	public void buscaLosLibrosSegunSuCategoriaYSiNoHayLibrosDeEsaCategoriaDevuelvaUnaListaVacia() {
+		Stant stant;
+		Libro libro1;
+		Libro libro2;
+		Libro libro3;
+
+		stant = new Stant("Editorial Estrella", 50, 2);
+		libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+		libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+		libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+		stant.agregarLibro(libro1);
+		stant.agregarLibro(libro2);
+		stant.agregarLibro(libro3);
+
+		String categoria = "Fabula";
+		List<Libro> resultado = stant.buscarPorCategoria(categoria);
+
+		assertNotNull(resultado);
+		assertTrue(resultado.isEmpty());
+
+	}
 }

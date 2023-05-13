@@ -1,0 +1,53 @@
+[33mcommit 810fe9111856e152d6c541c90d74fd6bd3cb4d31[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Joaquin Oviedo <joaco_oviedo2@hotmail.com>
+Date:   Thu May 11 23:16:58 2023 -0300
+
+    cambio de objeto docente a persona agregarventa en pabellon y en compra
+
+[33mcommit f1eac14fbb99c186d6fc0176bc30033341f2f30d[m
+Merge: 3a27ab8 23ecfbe
+Author: Jonatan Arroyo <123211229+JonDaAr@users.noreply.github.com>
+Date:   Thu May 11 18:29:28 2023 -0300
+
+    Merge pull request #2 from Joaco853/Jonatan
+    
+    Agrego 2 Clases y 4 test
+
+[33mcommit 23ecfbee0001c9d9cd3574460c1cd235f95213a5[m
+Author: JonDaAr <Jonatan_Arroyo@outlook.com>
+Date:   Thu May 11 18:16:30 2023 -0300
+
+    Agrego 2 Clases y 4 test
+
+[33mcommit 3a27ab862de34ad10b5be2b3d9a737d00080abd2[m
+Merge: 71e89d0 9439939
+Author: Sebastián <129956847+SebastianCh81@users.noreply.github.com>
+Date:   Thu May 11 17:54:44 2023 -0300
+
+    Merge pull request #1 from Joaco853/Joaquin
+    
+    Joaquin (feature)
+
+[33mcommit 9439939edfceaa8c887617534245ab91fc3dcef2[m[33m ([m[1;31morigin/Joaquin[m[33m)[m
+Author: Joaquin Oviedo <joaco_oviedo2@hotmail.com>
+Date:   Wed May 10 23:39:39 2023 -0300
+
+    Quesiunalumnopagounaentradatengaun10porcientodedescuentoencomprasmayoresde2000 y Queundocenterealicevariascomprasenunstant
+
+[33mcommit 4ee81f6dca7ff1b28a7936d04578ce8658640748[m
+Author: Joaquin Oviedo <joaco_oviedo2@hotmail.com>
+Date:   Wed May 10 23:16:58 2023 -0300
+
+    QueunaPersonaNoPuedaEntrarMasDeUnaVezConLaMismaEntrada y  QueunaAlumnoPagueLaEntradaUnDiaDomingoPerounDocenteNoYPuedanIngresar
+
+[33mcommit 1138feb806c1bfc01c6302fc05ac188de2e022fe[m
+Author: Joaquin Oviedo <joaco_oviedo2@hotmail.com>
+Date:   Wed May 10 22:25:30 2023 -0300
+
+    QuesePuedaAgregarunStantenunPabellonYQueNoSeaRepetido
+
+[33mcommit 71e89d0c3f143360acf251e57e70ef8153564517[m
+Author: Joaquin Oviedo <joaco_oviedo2@hotmail.com>
+Date:   Wed May 10 08:52:31 2023 -0300
+
+    inicio proyecto
