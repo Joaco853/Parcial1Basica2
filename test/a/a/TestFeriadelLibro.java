@@ -10,14 +10,229 @@ import java.util.List;
 
 import org.junit.Test;
 
-import unlam.edu.ar.pb2.parcial.src.Entrada;
-import unlam.edu.ar.pb2.parcial.src.Feria;
-import unlam.edu.ar.pb2.parcial.src.Libro;
-import unlam.edu.ar.pb2.parcial.src.Persona;
-import unlam.edu.ar.pb2.parcial.src.Stant;
-import unlam.edu.ar.pb2.parcial.src.TipoPersona;
-
 public class TestFeriadelLibro {
+	
+	@Test // Joaquin
+	public void QuesePuedaAgregarUnStantEnUnPabellonYQueNoSeaRepetido() {
+
+		String NombreEditorial = "Siglo veintiuno";
+		Integer metroscuadradosocupados = 20;
+		Integer ubicacion = 514;
+
+		Stant stant = new Stant(NombreEditorial, metroscuadradosocupados, ubicacion);
+
+		String NombrePabellon = "Pabellon Azul";
+		Pabellon pabellon = new Pabellon(NombrePabellon);
+
+		pabellon.agregarunstant(stant);
+		pabellon.agregarunstant(stant);
+
+		Integer numerodestantsesperados = 1;
+
+		assertEquals(numerodestantsesperados.intValue(), pabellon.getstants().size());
+	}
+
+	@Test // Joaquin
+	public void QueunaPersonaNoPuedaEntrarMasDeUnaVezConLaMismaEntradaALaFeria() {
+		String nombreDeLaFeria = "FeriaDelLibro";
+		String ubicacionFeria = "La Rural";
+		Integer tamaño = 2000;
+		Feria feria = new Feria(nombreDeLaFeria, ubicacionFeria, tamaño);
+
+		LocalDate fechaActual = LocalDate.now();
+		DayOfWeek diaSemana = fechaActual.getDayOfWeek();
+
+		String nombre = "Juan";
+		String apellido = "Perez";
+		Integer nroDni = 42351234;
+		Integer edad = 30;
+		TipoPersona tipoPersona = TipoPersona.ADULTO;
+		Double dinero = 5000.0;
+		Persona persona = new Persona(nombre, apellido, nroDni, edad, tipoPersona, dinero);
+
+		feria.agregarPersona(persona);
+
+		Integer numeroentrada = 1111;
+		Boolean sinUsar = true;
+		Double precioEntrada = 2000.0;
+		Entrada entrada = new Entrada(numeroentrada, sinUsar, precioEntrada);
+
+		feria.agregarEntrada(entrada);
+
+		// Verificamos que la persona no está presente en el mapa de asignación de
+		// entradas
+
+		assertFalse(feria.getAsignacionEntrada().containsKey(persona));
+
+		// Vendemos una entrada a una persona
+
+		feria.venderEntrada(persona, entrada, diaSemana);
+		// Verificamos que la persona este presente en el mapa
+
+		assertTrue(feria.getAsignacionEntrada().containsKey(persona));
+
+		// Intentamos venderle nuevamente la entrada, por ende al no poder vender la
+		// misma entrada que poseé no puede volver a utilizarla
+		feria.venderEntrada(persona, entrada, diaSemana);
+
+		// Verificamos que no se haya realizado la venta nuevamente
+		Integer valorEsperado = 1;
+		Integer valorObtenido = feria.getAsignacionEntrada().size();
+		assertEquals(valorEsperado, valorObtenido);
+	}
+
+	@Test // Joaquin
+	public void QueUnAlumnoPagueLaEntradaUnDiaDomingoPeroUnDocenteNoYPuedanIngresarAmbos() {
+		String nombreDeLaFeria = "FeriaDelLibro";
+		String ubicacionFeria = "La Rural";
+		Integer tamaño = 2000;
+		Feria feria = new Feria(nombreDeLaFeria, ubicacionFeria, tamaño);
+
+		DayOfWeek diaSemana = DayOfWeek.SUNDAY;
+
+		String nombre = "Juan";
+		String apellido = "Perez";
+		Integer nroDni = 42351234;
+		Integer edad = 16;
+		String institucion = "Jose Hernandez";
+		Double dinero = 5000.0;
+		TipoPersona tipoPersona = TipoPersona.ALUMNO;
+		Alumno alumno = new Alumno(nombre, apellido, nroDni, edad, tipoPersona, institucion, dinero);
+
+		feria.agregarPersona(alumno);
+
+		String nombreDocente = "Romina";
+		String apellidoDocente = "Mendez";
+		Integer nroDniDocente = 39323234;
+		Integer edadDocente = 30;
+		String institucionDocente = "Jose Hernandez";
+		Double dineroDocente = 15000.0;
+		TipoPersona tipoPersonaDocente = TipoPersona.DOCENTE;
+		Docente docente = new Docente(nombreDocente, apellidoDocente, nroDniDocente, edadDocente, tipoPersonaDocente,
+				institucionDocente, dineroDocente);
+
+		feria.agregarPersona(docente);
+
+		Integer numeroentrada2 = 2222;
+		Boolean sinUsar = true;
+		Double precioEntrada = 2000.0;
+		Entrada entrada2 = new Entrada(numeroentrada2, sinUsar, precioEntrada);
+
+		feria.agregarEntrada(entrada2);
+
+		Integer numeroentrada = 1111;
+		Boolean sinUsar1 = true;
+		Double precioEntrada1 = 2000.0;
+		Entrada entrada = new Entrada(numeroentrada, sinUsar1, precioEntrada1);
+
+		feria.agregarEntrada(entrada);
+
+		feria.venderEntrada(alumno, entrada, diaSemana);
+
+		// se le descuenta el dinero por el valor de la entrada ya que lo dias
+		// viernes,sabados y domingos deben pagar los alumnos
+		Double valorEsperado = 3000.0;
+		Double valorObtenido = alumno.getDinero();
+		assertEquals(valorEsperado, valorObtenido);
+
+		// las docentes no deben abonar el dia domingo
+		feria.venderEntrada(docente, entrada, diaSemana);
+		Double valorEsperado1 = 15000.0;
+		Double valorObtenido1 = docente.getDinero();
+		assertEquals(valorEsperado1, valorObtenido1);
+
+	}
+	
+	@Test	// Joaquin
+	public void  QueSiunAlumnoPagounaEntradaTengaun10PorcientodeDescuentoenCompras() {
+		
+		String nombreDeLaFeria = "FeriaDelLibro";
+		String ubicacionFeria = "La Rural";
+		Integer tamaño = 2000;
+		Feria feria = new Feria(nombreDeLaFeria, ubicacionFeria, tamaño);
+
+		DayOfWeek diaSemana = DayOfWeek.SUNDAY;
+
+		String nombre = "Juan";
+		String apellido = "Perez";
+		Integer nroDni = 42351234;
+		Integer edad = 16;
+		String institucion = "Jose Hernandez";
+		Double dinero = 5000.0;
+		TipoPersona tipoPersona = TipoPersona.ALUMNO;
+		Alumno alumno = new Alumno(nombre, apellido, nroDni, edad, tipoPersona, institucion, dinero);
+		
+		Integer numeroentrada = 1111;
+		Boolean sinUsar = true;
+		Double precioEntrada = 2000.0;
+		Entrada entrada = new Entrada(numeroentrada, sinUsar, precioEntrada);
+
+		feria.agregarEntrada(entrada);
+		
+		feria.venderEntrada(alumno, entrada, diaSemana);
+
+		
+		Double ValorCompra=4000.0;
+		Compra compra = new Compra(ValorCompra, alumno);
+		
+		Double Valorobtenido1 = compra.valorapagarcompra();
+
+		Double Valoresperado1= 3600.0;
+
+		assertEquals(Valorobtenido1, Valoresperado1);
+	
+	}
+	
+	@Test	// Joaquin
+	public void  QueSeRegistrenLasVentasEnUnStant() {
+		
+		String NombreEditorial ="Siglo veintiuno";
+		Integer metroscuadradosocupados = 20;
+		Integer ubicacion = 514;
+		Stant stante = new Stant(NombreEditorial, metroscuadradosocupados, ubicacion);
+
+		DayOfWeek diaSemana = DayOfWeek.SUNDAY;
+
+		
+		String nombreDeLaFeria = "FeriaDelLibro";
+		String ubicacionFeria = "La Rural";
+		Integer tamaño = 2000;
+		Feria feria = new Feria(nombreDeLaFeria, ubicacionFeria, tamaño);
+		
+		String nombreDocente = "Romina";
+		String apellidoDocente = "Mendez";
+		Integer nroDniDocente = 39323234;
+		Integer edadDocente = 30;
+		String institucionDocente = "Jose Hernandez";
+		Double dineroDocente = 15000.0;
+		TipoPersona tipoPersonaDocente = TipoPersona.DOCENTE;
+		Docente docente = new Docente(nombreDocente, apellidoDocente, nroDniDocente, edadDocente, tipoPersonaDocente,
+				institucionDocente, dineroDocente);
+
+		feria.agregarPersona(docente);
+
+		Integer numeroentrada = 1111;
+		Boolean sinUsar1 = true;
+		Double precioEntrada1 = 2000.0;
+		Entrada entrada = new Entrada(numeroentrada, sinUsar1, precioEntrada1);
+
+		feria.agregarEntrada(entrada);
+
+		feria.venderEntrada(docente, entrada, diaSemana);
+
+		
+		Double ValorCompra=4000.0;
+		Compra compra = new Compra(ValorCompra);
+				
+		stante.agregarunaventa(compra,docente);
+		stante.agregarunaventa(compra,docente);
+		
+		Integer numerodestantsesperados= 2;
+
+		assertEquals(numerodestantsesperados.intValue(),stante.Ventas.size());
+
+}
+	
 	@Test // Sebastian
 	public void queSePuedaAgregarUnaPersonaAlaFeria() {
 		String nombreDeLaFeria = "FeriaDelLibro";

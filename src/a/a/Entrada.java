@@ -1,8 +1,7 @@
 package a.a;
 
 
-public class Entrada {
-	public class Entrada {
+public class Entrada{
 		private Integer numeroEntrada;
 		private Boolean sinUsar;
 		private Double PrecioEntrada;

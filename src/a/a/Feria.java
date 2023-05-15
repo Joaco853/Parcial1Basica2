@@ -9,11 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import unlam.edu.ar.pb2.parcial.src.Entrada;
-import unlam.edu.ar.pb2.parcial.src.Persona;
-import unlam.edu.ar.pb2.parcial.src.Stant;
-import unlam.edu.ar.pb2.parcial.src.TipoPersona;
-
 public class Feria {
 	// attributes
 	private String nombreDeLaFeria;
@@ -94,32 +89,39 @@ public class Feria {
 	// se realiza la venta de una entrada pero con las siguientes condiciones:
 	// 1- si es un alumno y ademas son los dias viernes, sabados y domingos debe
 	// pagar la entrada
-	// 2- si es una docente los dias domingos no debe pagar la entrada
+	// 2- si es una docente no debe pagar la entrada
 	// 3- si no es ninguna de las anteriores debe pagar la entrada
 	// si se requiere se puede modificar para mas tipos de personas.
 	public void venderEntrada(Persona persona, Entrada entrada, DayOfWeek diaSemana) {
-		Double pago = 0.0;
-		for (Entrada entrada1 : entradas) {
-			if (entrada1.equals(entrada)) {
-				if (persona.getTipoPersona() == TipoPersona.ALUMNO) {
-					if (diaDeLaSemana == DayOfWeek.FRIDAY || diaDeLaSemana == DayOfWeek.SATURDAY
-							|| diaDeLaSemana == DayOfWeek.SUNDAY) {
+			Double pago = 0.0;
+			for (Entrada entrada1 : entradas) {
+				if (entrada1.equals(entrada)) {
+					if (persona.getTipoPersona().equals(TipoPersona.ALUMNO) && ((diaDeLaSemana.equals(DayOfWeek.FRIDAY) || diaDeLaSemana.equals(DayOfWeek.SATURDAY)
+								|| diaDeLaSemana.equals(DayOfWeek.SUNDAY)))) {
+							getAsignacionEntrada().put(persona, entrada);
+							pago = persona.getDinero() - entrada.getPrecioEntrada();
+							persona.setDinero(pago);
+							persona.setPagoentrada(true);
+						}
+						else if(persona.getTipoPersona().equals(TipoPersona.ALUMNO) && ((diaDeLaSemana.equals(DayOfWeek.MONDAY) || diaDeLaSemana.equals(DayOfWeek.TUESDAY)
+								|| diaDeLaSemana.equals(DayOfWeek.WEDNESDAY) || diaDeLaSemana.equals(DayOfWeek.THURSDAY)))){
+							getAsignacionEntrada().put(persona, entrada);
+							persona.setPagoentrada(false);
+					}
+					else if (persona.getTipoPersona().equals(TipoPersona.DOCENTE)) {
+						getAsignacionEntrada().put(persona, entrada);
+						persona.setPagoentrada(false);
+					} else if(persona.getTipoPersona().equals(TipoPersona.ADULTO_MAYOR) || persona.getTipoPersona().equals(TipoPersona.ADULTO)|| persona.getTipoPersona().equals(TipoPersona.MENOR)){
 						getAsignacionEntrada().put(persona, entrada);
 						pago = persona.getDinero() - entrada.getPrecioEntrada();
 						persona.setDinero(pago);
-					}
+						persona.setPagoentrada(true);
 
-				} else if (persona.getTipoPersona() == TipoPersona.DOCENTE && diaSemana == DayOfWeek.SUNDAY) {
-					getAsignacionEntrada().put(persona, entrada);
-				} else {
-					getAsignacionEntrada().put(persona, entrada);
-					pago = persona.getDinero() - entrada.getPrecioEntrada();
-					persona.setDinero(pago);
+					}
 				}
 			}
-		}
 
-	}
+		}
 
 	public void agregarPersona(Persona persona) {
 		this.personas.add(persona);

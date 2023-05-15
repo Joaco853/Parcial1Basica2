@@ -1,6 +1,5 @@
 package a.a;
 
-import unlam.edu.ar.pb2.parcial.src.TipoPersona;
 
 public class Docente extends Persona {
 

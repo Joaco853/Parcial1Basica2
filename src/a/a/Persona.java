@@ -2,8 +2,6 @@ package a.a;
 
 import java.util.ArrayList;
 
-import unlam.edu.ar.pb2.parcial.src.TipoPersona;
-
 public class Persona {
 	// Attributes
 	private String nombre;
@@ -12,6 +10,7 @@ public class Persona {
 	private Integer Edad;
 	private TipoPersona tipoPersona;
 	private Double dinero;
+	private Boolean pagoentrada;
 
 	// Constructor
 	public Persona(String nombre, String apellido, Integer nroDni, Integer edad, TipoPersona tipoPersona,
@@ -23,12 +22,20 @@ public class Persona {
 		Edad = edad;
 		this.tipoPersona = tipoPersona;
 		this.setDinero(dinero);
-	}
+		this.pagoentrada=false;
 
-	// Abstracts Class
+	}
 
 	// Getters and Setters
 
+	public Boolean getPagoentrada() {
+		return pagoentrada;
+	}
+
+	public void setPagoentrada(Boolean pagoentrada) {
+		this.pagoentrada = pagoentrada;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

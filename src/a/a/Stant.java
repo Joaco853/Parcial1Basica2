@@ -5,17 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import unlam.edu.ar.pb2.parcial.src.Libro;
-import unlam.edu.ar.pb2.parcial.src.Persona;
-import unlam.edu.ar.pb2.parcial.src.TipoPersona;
-import unlam.edu.ar.pb2.parcial.src.Transaccion;
-
 public class Stant {
 	private String Nombre;
 	private Integer metrosCuadradosOcupado;
 	private Integer ubicacion;
 
-	ArrayList<Transaccion> Ventas;
+	ArrayList<Compra> Ventas;
 	ArrayList<Libro> libros;
 	private String categoriaStant;
 
@@ -53,11 +48,11 @@ public class Stant {
 		this.metrosCuadradosOcupado = metrosCuadradosOcupado;
 	}
 
-	public ArrayList<Transaccion> getVentas() {
+	public ArrayList<Compra> getVentas() {
 		return Ventas;
 	}
 
-	public void setVentas(ArrayList<Transaccion> ventas) {
+	public void setVentas(ArrayList<Compra> ventas) {
 		Ventas = ventas;
 	}
 
@@ -136,5 +131,11 @@ public class Stant {
 			}
 		}
 
+	}
+	
+	public void agregarunaventa(Compra compra, Persona persona) {
+		// TODO Auto-generated method stub
+		Compra venta= new Compra(compra,persona);
+		Ventas.add(venta);
 	}
 }

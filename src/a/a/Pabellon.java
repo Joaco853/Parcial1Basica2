@@ -3,10 +3,7 @@ package a.a;
 import java.util.HashSet;
 import java.util.Objects;
 
-import unlam.edu.ar.pb2.parcial.src.Stant;
-
 public class Pabellon {
-	public class Pabellon {
 		private HashSet <Stant> Stants = new HashSet<>();
 		private String nombrePabellon;
 
