@@ -3,7 +3,6 @@ package a.a;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Stant {
 	private String Nombre;
@@ -137,5 +136,38 @@ public class Stant {
 		// TODO Auto-generated method stub
 		Compra venta= new Compra(compra,persona);
 		Ventas.add(venta);
+	}
+	
+	public Double DescuentosPorCategoria(Persona visitante, Libro libro , String categoria) {
+		Double descuento = libro.getPrecio();
+		if(libro.getCategoria().equals(categoria)) {
+			descuento = libro.getPrecio() - (libro.getPrecio() * 0.2);
+
+		    Double nuevoDinero = visitante.getDinero() - descuento;
+		    visitante.setDinero(nuevoDinero);
+		}
+		return descuento;
+	}
+
+	
+
+	public List<Libro> buscarLibroPorNombre(String titulo) {
+		 List<Libro> librosEncontrados = new ArrayList<>();
+		    for (Libro libro : libros) {
+		        if (libro.getAutor().equals(titulo)) {
+		            librosEncontrados.add(libro);
+		        }
+		    }
+		    return librosEncontrados;
+	}
+
+	public List<Libro> buscarPorCategoria(String categoria) {
+		List<Libro> librosEncontrados = new ArrayList<>();
+	    for (Libro libro : libros) {
+	        if (libro.getCategoria().equals(categoria)) {
+	            librosEncontrados.add(libro);
+	        }
+	    }
+	    return librosEncontrados;
 	}
 }

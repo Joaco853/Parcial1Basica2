@@ -628,5 +628,221 @@ public class TestFeriadelLibro {
 			assertFalse(stant.venderLibroTerror(menor, libro));
 
 		}
+		@Test // Jonatan
+		public void agregarUnaPersonaALaListaDeVisitantesQueFueALaFeria() {
+			Feria feria;
+			Alumno alumno;
+			Docente docente;
+			Persona visitante;
+			List<Persona> personasQueEntraron;
+			DayOfWeek dia = DayOfWeek.SUNDAY;
+
+			feria = new Feria("Feria del Libro", "San Justo", 1000);
+			personasQueEntraron = new ArrayList<>();
+
+			docente = new Docente("Mary", "Jane", 987654321, 35, TipoPersona.DOCENTE, "Colegio ABC", 50.0);
+			alumno = new Alumno("Magnus", "Carlsen", 123456789, 15, TipoPersona.ALUMNO, "Instituto XYZ", 50.0);
+			visitante = new Persona("Alex", "Rose", 567891234, 30, TipoPersona.ADULTO, 100.0);
+
+			Entrada entradaAlumno = new Entrada(1000, true, 1000.0);
+			Entrada entradaDocente = new Entrada(1000, true, 1000.0);
+			Entrada entradaVisitante = new Entrada(1000, true, 1000.0);
+
+			feria.agregarEntrada(entradaAlumno);
+			feria.agregarEntrada(entradaDocente);
+			feria.agregarEntrada(entradaVisitante);
+
+			feria.venderEntrada(alumno, entradaAlumno, dia);
+			feria.venderEntrada(docente, entradaDocente, dia);
+			feria.venderEntrada(visitante, entradaVisitante, dia);
+
+			feria.agregarPersona(alumno);
+			feria.agregarPersona(docente);
+			feria.agregarPersona(visitante);
+
+			personasQueEntraron.add(alumno);
+			personasQueEntraron.add(docente);
+			personasQueEntraron.add(visitante);
+
+			assertEquals(3, feria.getPersonas().size());
+			assertEquals(3, feria.getEntradas().size());
+			assertEquals(personasQueEntraron, feria.getPersonas());
+		}
+
+		@Test // Jonatan
+		public void aplicarDescuentoSiTieneDescuentoLaCategoriaQueTengaElLibro() {
+			Feria feria;
+			Stant stant;
+			Libro libro;
+			Entrada entrada;
+			Persona visitante;
+			DayOfWeek dia = DayOfWeek.SUNDAY;  
+			
+			visitante = new Persona("Jhon", "Wick", 567891234, 30, TipoPersona.ADULTO, 100.0);
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			entrada = new Entrada(1000,true,1000.0);
+		
+			feria.agregarEntrada(entrada);
+			feria.agregarPersona(visitante);
+			feria.venderEntrada(visitante, entrada, dia);
+			
+			feria = new Feria("Feria del Libro","San Justo", 1000);
+			stant = new Stant("Editorial Luna", 50, 2);
+			libro = new Libro("El Quijote", "Miguel de Cervantes", "Novela", 100.0);
+			String categoria = "Novela";
+			
+			Double descuento = libro.getPrecio() - (libro.getPrecio()*0.2);
+
+			feria.agregarStant(stant);
+			stant.agregarLibro(libro);
+			
+			assertEquals(descuento,stant.DescuentosPorCategoria(visitante, libro, categoria), 0.01);
+		}
+		
+		@Test // Jonatan
+		public void queNoSeApliqueElDescuentoSiLaCategoriaNoTieneDescuento() {
+			Feria feria;
+			Stant stant;
+			Libro libro;
+			Entrada entrada;
+			Persona visitante;
+			DayOfWeek dia = DayOfWeek.SUNDAY;  
+			
+			visitante = new Persona("Willy", "Smith", 567891234, 33, TipoPersona.ADULTO, 100.0);
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			entrada = new Entrada(1000,true,1000.0);
+		
+			feria.agregarEntrada(entrada);
+			feria.agregarPersona(visitante);
+			feria.venderEntrada(visitante, entrada, dia);
+			
+			feria = new Feria("Feria del Libro","San Justo", 1000);
+			stant = new Stant("Editorial Luna", 50, 2);
+			libro = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+			String categoria = "Fantasia";
+			
+			
+
+			feria.agregarStant(stant);
+			stant.agregarLibro(libro);
+			 
+			//Deberia Devolver el precio normal del libro sin descuentos
+			assertEquals(libro.getPrecio(),stant.DescuentosPorCategoria(visitante, libro, categoria), 0.01);
+		}
+		
+		@Test // Jonatan
+		public void hacerUnaBusquedaDeUnLibroPorNombreYDevuelveElLibro() {
+			Feria feria;
+			Stant stant;
+			Libro libro1;
+			Libro libro2;
+			Libro libro3;
+			
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			stant = new Stant("Editorial Sol", 50, 2);
+			libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+			libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+			libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+			
+			feria.agregarStant(stant);
+			stant.agregarLibro(libro1);
+			stant.agregarLibro(libro2);
+			stant.agregarLibro(libro3);
+			
+			String nombre = "Cien años de soledad";
+			List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+
+			assertNotNull(resultado);
+			assertTrue(resultado.isEmpty());
+			for (Libro libro : resultado) {
+				assertEquals(nombre, libro.getTitulo());
+			}
+		}
+		
+		@Test // Jonatan
+		public void hacerUnaBusquedaDeUnLibroPorNombreYSiNoLoEncuentraDevuelvaVacio() {
+			Feria feria;
+			Stant stant;
+			Libro libro1;
+			Libro libro2;
+			Libro libro3;
+			
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			
+			stant = new Stant("Editorial Luna", 50, 2);
+			
+			libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+			libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+			libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+			
+			feria.agregarStant(stant);
+			stant.agregarLibro(libro1);
+			stant.agregarLibro(libro2);
+			stant.agregarLibro(libro3);
+
+			String nombre = "El Principito";
+			List<Libro> resultado = stant.buscarLibroPorNombre(nombre);
+
+			assertNotNull(resultado);
+			assertTrue(resultado.isEmpty());
+		}
+		
+		@Test // Jonatan
+		public void buscaLosLibrosSegunSuCategoriaYDevuelveUnaListaConLosLibros() {
+			Feria feria;
+			Stant stant;
+			Libro libro1;
+			Libro libro2;
+			Libro libro3;
+			
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			stant = new Stant("Editorial Estrella", 50, 2);
+			
+			libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+			libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+			libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+			
+			feria.agregarStant(stant);
+			
+			stant.agregarLibro(libro1);
+			stant.agregarLibro(libro2);
+			stant.agregarLibro(libro3);
+
+			String categoria = "Novela";
+			List<Libro> resultado = stant.buscarPorCategoria(categoria);
+
+			for (Libro libro : resultado) {
+				assertEquals(categoria, libro.getCategoria());
+			}
+		}
+		
+		@Test // Jonatan
+		public void buscaLosLibrosSegunSuCategoriaYSiNoHayLibrosDeEsaCategoriaDevuelvaUnaListaVacia() {
+			Feria feria;
+			Stant stant;
+			Libro libro1;
+			Libro libro2;
+			Libro libro3;
+			
+			feria = new Feria("Feria del Libro", "San Justo", 50);
+			stant = new Stant("Editorial Estrella", 50, 2);
+			
+			feria.agregarStant(stant);
+			
+			libro1 = new Libro("Cien años de soledad", "Gabriel García Márquez", "Novela", 29.99);
+			libro2 = new Libro("El amor en los tiempos del cólera", "Gabriel García Márquez", "Novela", 24.99);
+			libro3 = new Libro("1984", "George Orwell", "Ciencia ficción", 19.99);
+
+			stant.agregarLibro(libro1);
+			stant.agregarLibro(libro2);
+			stant.agregarLibro(libro3);
+
+			String categoria = "Fabula";
+			List<Libro> resultado = stant.buscarPorCategoria(categoria);
+
+			assertNotNull(resultado);
+			assertTrue(resultado.isEmpty());
+
+		}
 		
 }
